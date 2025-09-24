@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conceptos y Principios de Hardware e Instalación de Software - GA10-220501097-AA1-EV01</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+
+        /* Navegación */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: #667eea;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 150px 0 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="0,0 1000,100 1000,0"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+
+        /* Contenido principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            background: white;
+            margin: 4rem 0;
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .section.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+            border-left: 4px solid #667eea;
+            padding-left: 1rem;
+        }
+
+        .section p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: #555;
+            text-align: justify;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .card h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">SENA - ADSO</div>
+            <ul class="nav-menu">
+                <li><a href="#inicio" class="nav-link">Inicio</a></li>
+                <li><a href="#introduccion" class="nav-link">Introducción</a></li>
+                <li><a href="#sistema-operativo" class="nav-link">Sistema Operativo</a></li>
+                <li><a href="#organizaciones" class="nav-link">Organizaciones</a></li>
+                <li><a href="#protocolos" class="nav-link">Protocolos</a></li>
+                <li><a href="#medios-transmision" class="nav-link">Medios de Transmisión</a></li>
+                <li><a href="#conclusion" class="nav-link">Conclusión</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header id="inicio" class="header">
+        <div class="header-content">
+            <h1>Conceptos y Principios de Hardware e Instalación de Software</h1>
+            <p class="subtitle">GA10-220501097-AA1-EV01</p>
+            
+            <div class="info-card">
+                <h3>Información del Proyecto</h3>
+                <p><strong>Programa:</strong> Análisis y Desarrollo de Software (ADSO)</p>
+                <p><strong>Ficha:</strong> 2885494</p>
+                <p><strong>Estudiante:</strong> José Luis Zúñiga</p>
+                <p><strong>Instructor:</strong> Julián Loaiza</p>
+                <p><strong>Modalidad:</strong> Landing Informativa</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="container">
+        <!-- Introducción -->
+        <section id="introduccion" class="section">
+            <h2>Introducción</h2>
+            <p>Esta evidencia se centra en consolidar los conceptos relacionados con los conceptos básicos de redes y networking que son esenciales en el proceso de alistamiento de infraestructura tecnológica en la fase de implantación.</p>
+            
+            <div class="highlight-box">
+                <h3>Objetivo Principal</h3>
+                <p>Especificar las características que debe tener un sistema operativo seleccionado, identificar las organizaciones estándar en redes, analizar las familias de protocolos de transmisión y estudiar los medios de transmisión disponibles.</p>
+            </div>
+        </section>
+
+        <!-- Sistema Operativo -->
+        <section id="sistema-operativo" class="section">
+            <h2>Características del Sistema Operativo</h2>
+            
+            <h3>Sistema Operativo Recomendado: Windows Server 2022</h3>
+            <p>Para infraestructura empresarial, Windows Server 2022 ofrece características esenciales para el networking y administración de redes.</p>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h4>🛡️ Seguridad Avanzada</h4>
+                    <p>Incluye Windows Defender, cifrado BitLocker, y políticas de seguridad granulares para proteger la infraestructura de red.</p>
+                </div>
+                <div class="card">
+                    <h4>🌐 Servicios de Red</h4>
+                    <p>DNS, DHCP, Active Directory, servicios de directorio y autenticación centralizada para gestión eficiente de usuarios y recursos.</p>
+                </div>
+                <div class="card">
+                    <h4>⚡ Rendimiento Optimizado</h4>
+                    <p>Soporte para hardware moderno, virtualización Hyper-V, y optimizaciones para cargas de trabajo en la nube.</p>
+                </div>
+                <div class="card">
+                    <h4>🔧 Administración Centralizada</h4>
+                    <p>Windows Admin Center, PowerShell, y herramientas de administración remota para gestión simplificada.</p>
+                </div>
+            </div>
+
+            <h3>Características Técnicas Requeridas</h3>
+            <p><strong>Hardware Mínimo:</strong> Procesador de 64 bits a 1.4 GHz, 512 MB de RAM (2 GB para experiencia completa), 32 GB de espacio en disco.</p>
+            <p><strong>Networking:</strong> Adaptador Ethernet Gigabit, soporte para IPv4/IPv6, compatibilidad con estándares IEEE 802.</p>
+            <p><strong>Escalabilidad:</strong> Soporte para múltiples procesadores, hasta 24 TB de RAM, clustering y balanceeo de carga.</p>
+        </section>
+
+        <!-- Organizaciones -->
+        <section id="organizaciones" class="section">
+            <h2>Organizaciones de Estándares en Redes</h2>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h4>🏛️ IEEE (Institute of Electrical and Electronics Engineers)</h4>
+                    <p>Desarrolla estándares como 802.3 (Ethernet), 802.11 (Wi-Fi), 802.1Q (VLAN). Es la organización líder en estándares de comunicaciones.</p>
+                </div>
+                <div class="card">
+                    <h4>🌍 ITU (International Telecommunication Union)</h4>
+                    <p>Organización de las Naciones Unidas que coordina estándares globales de telecomunicaciones, incluyendo protocolos de transmisión internacional.</p>
+                </div>
+                <div class="card">
+                    <h4>🔧 IETF (Internet Engineering Task Force)</h4>
+                    <p>Desarrolla y promociona estándares de Internet voluntarios, especialmente protocolos de la suite TCP/IP mediante RFCs.</p>
+                </div>
+                <div class="card">
+                    <h4>📡 ISO (International Organization for Standardization)</h4>
+                    <p>Creó el modelo OSI de 7 capas, fundamental para entender las comunicaciones de red y la interoperabilidad entre sistemas.</p>
+                </div>
+            </div>
+
+            <h3>Impacto de los Estándares</h3>
+            <p>Estos estándares garantizan la interoperabilidad entre equipos de diferentes fabricantes, facilitan el desarrollo tecnológico global y aseguran la compatibilidad en las comunicaciones de red a nivel mundial.</p>
+        </section>
+
+        <!-- Protocolos -->
+        <section id="protocolos" class="section">
+            <h2>Familias de Protocolos de Transmisión</h2>
+            
+            <h3>Las Dos Grandes Familias de Protocolos</h3>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h4>📊 Suite TCP/IP (Internet Protocol Suite)</h4>
+                    <p><strong>Características:</strong> Protocolo confiable, orientado a conexión, control de flujo y corrección de errores.</p>
+                    <p><strong>Componentes:</strong></p>
+                    <ul style="margin-top: 1rem;">
+                        <li>TCP (Transmission Control Protocol) - Transporte confiable</li>
+                        <li>IP (Internet Protocol) - Enrutamiento de paquetes</li>
+                        <li>UDP (User Datagram Protocol) - Transporte rápido</li>
+                        <li>HTTP/HTTPS, FTP, SMTP - Protocolos de aplicación</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🖥️ Suite OSI (Open Systems Interconnection)</h4>
+                    <p><strong>Características:</strong> Modelo teórico de 7 capas para standardizar comunicaciones de red.</p>
+                    <p><strong>Las 7 Capas:</strong></p>
+                    <ul style="margin-top: 1rem;">
+                        <li>Física - Transmisión de bits</li>
+                        <li>Enlace de datos - Control de acceso al medio</li>
+                        <li>Red - Enrutamiento</li>
+                        <li>Transporte - Entrega confiable</li>
+                        <li>Sesión - Gestión de sesiones</li>
+                        <li>Presentación - Formato de datos</li>
+                        <li>Aplicación - Interface de usuario</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>Diferencias Clave</h3>
+                <p>TCP/IP es el estándar de facto de Internet, más simple y práctico con 4 capas. OSI es más teórico y educativo con 7 capas, usado principalmente como modelo de referencia para entender las comunicaciones de red.</p>
+            </div>
+        </section>
+
+        <!-- Medios de Transmisión -->
+        <section id="medios-transmision" class="section">
+            <h2>Medios de Transmisión</h2>
+            
+            <h3>🔗 Medios Guiados (Cableados)</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Cable de Par Trenzado (UTP/STP)</h4>
+                    <p><strong>Características:</strong> Más económico, fácil instalación, estándar en redes LAN.</p>
+                    <p><strong>Categorías:</strong> Cat5e (1 Gbps), Cat6 (10 Gbps hasta 55m), Cat6a (10 Gbps hasta 100m)</p>
+                    <p><strong>Aplicaciones:</strong> Redes Ethernet, conexiones de escritorio, telecomunicaciones</p>
+                </div>
+                <div class="card">
+                    <h4>Cable Coaxial</h4>
+                    <p><strong>Características:</strong> Mayor inmunidad al ruido, alcance superior al par trenzado.</p>
+                    <p><strong>Tipos:</strong> RG-58 (Thin Ethernet), RG-8 (Thick Ethernet)</p>
+                    <p><strong>Aplicaciones:</strong> Televisión por cable, redes backbone antiguas</p>
+                </div>
+                <div class="card">
+                    <h4>Fibra Óptica</h4>
+                    <p><strong>Características:</strong> Mayor ancho de banda, inmune a interferencias electromagnéticas, largas distancias.</p>
+                    <p><strong>Tipos:</strong> Monomodo (larga distancia), Multimodo (corta distancia)</p>
+                    <p><strong>Aplicaciones:</strong> Backbone de red, conexiones WAN, centros de datos</p>
+                </div>
+            </div>
+
+            <h3>📡 Medios No Guiados (Inalámbricos)</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Ondas de Radio</h4>
+                    <p><strong>Frecuencias:</strong> VHF, UHF, microondas</p>
+                    <p><strong>Características:</strong> Largo alcance, atraviesa obstáculos, susceptible a interferencias</p>
+                    <p><strong>Aplicaciones:</strong> Wi-Fi, Bluetooth, comunicaciones móviles</p>
+                </div>
+                <div class="card">
+                    <h4>Microondas Terrestres</h4>
+                    <p><strong>Características:</strong> Alta frecuencia, línea de vista requerida, alta capacidad</p>
+                    <p><strong>Aplicaciones:</strong> Enlaces punto a punto, backhaul de torres celulares</p>
+                </div>
+                <div class="card">
+                    <h4>Comunicación Satelital</h4>
+                    <p><strong>Características:</strong> Cobertura global, alta latencia, costosa</p>
+                    <p><strong>Aplicaciones:</strong> Comunicaciones rurales, broadcasting, Internet global</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>Criterios de Selección</h3>
+                <p>La elección del medio depende de factores como: distancia, ancho de banda requerido, costo, facilidad de instalación, seguridad, inmunidad a interferencias y requisitos de mantenimiento.</p>
+            </div>
+        </section>
+
+        <!-- Conclusión -->
+        <section id="conclusion" class="section">
+            <h2>Conclusión</h2>
+            <p>La comprensión de los conceptos básicos de hardware, instalación de software y networking es fundamental para el éxito en la implantación de infraestructura tecnológica. La selección adecuada del sistema operativo, el conocimiento de las organizaciones que establecen estándares, y la comprensión de protocolos y medios de transmisión son pilares esenciales para cualquier profesional en Análisis y Desarrollo de Software.</p>
+            
+            <p>Los estándares desarrollados por IEEE, IETF, ITU e ISO garantizan la interoperabilidad y evolución constante de las tecnologías de red. La elección entre TCP/IP y OSI como marcos de referencia, junto con la selección apropiada de medios de transmisión guiados y no guiados, determina el éxito de cualquier implementación de red.</p>
+
+            <div class="highlight-box">
+                <h3>Reflexión Final</h3>
+                <p>Este conocimiento forma la base técnica necesaria para tomar decisiones informadas en proyectos de infraestructura tecnológica, asegurando soluciones escalables, seguras y eficientes que cumplan con los estándares internacionales de la industria.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 SENA - Análisis y Desarrollo de Software</p>
+            <p>Ficha 2885494 | Instructor: Julián Loaiza</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navegación suave
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                const offsetTop = targetElement.offsetTop - 100;
+
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animación al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Cambio de navbar al hacer scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Highlight de navegación activa
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.color = '#333';
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.style.color = '#667eea';
+                    link.style.fontWeight = 'bold';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
